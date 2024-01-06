@@ -1,0 +1,11 @@
+ int sumOfPowers(int a, int b){
+        int ans=0;
+        for(int num=a;num<=b;num++){
+            int curr=num;
+            for(int i=2;i*i<=num;i++){
+                while(curr%i==0)ans++,curr/=i;
+            }
+            if(curr>1)ans++;
+        }
+        return ans;
+    }
