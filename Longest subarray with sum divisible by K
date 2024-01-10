@@ -1,0 +1,89 @@
+class Solution:
+    def longSubarrWthSumDivByK(self, nums, length, k):
+        # Dictionary to store the remainder and its corresponding index
+        remainder_index_map = {0: -1}
+        current_remainder_sum, max_length = 0, 0
+
+        for i in range(length):
+            # Calculate the cumulative remainder sum
+            current_remainder_sum = (current_remainder_sum + nums[i]) % k
+
+            # Check if the current remainder has been seen before
+            if current_remainder_sum in remainder_index_map:
+                # Update the maximum length if the current subarray is longer
+                max_length = max(max_length, i - remainder_index_map[current_remainder_sum])
+            else:
+                # Store the index of the current remainder if it's encountered for the first time
+                remainder_index_map[current_remainder_sum] = i
+
+        return max_length
+
+
+
+
+
+
+
+
+Longest Subarray with Sum Divisible by K
+
+ 
+Introduction
+When dealing with arrays and subarrays, a common and interesting problem is finding the longest subarray with a specific property. In this article, we will explore the problem of finding the length of the longest subarray with a sum of elements divisible by a given positive integer K. We'll discuss the intuition behind the problem, present an approach to solve it, provide an optimized code solution in Python, and then dry run the code with a concrete example.
+
+ 
+Intuition
+The key insight to solve this problem efficiently is to recognize that the sum of elements in a subarray is divisible by K if and only if the cumulative remainder sum up to that point is the same as the cumulative remainder sum at some previous point. By keeping track of the remainder sum and its corresponding index in a dictionary, we can efficiently identify subarrays with the desired property.
+
+ 
+Approach
+1. Initialize a dictionary remainder_index_map to store the remainder sum and its corresponding index. Initialize current_remainder_sum and max_length to 0.
+2. Iterate through the array, calculating the cumulative remainder sum at each index.
+3. Check if the current remainder sum has been seen before. If yes, update the maximum length of the subarray. If not, store the current remainder sum along with its index in the dictionary.
+4. Return the maximum length found.
+
+ 
+Optimized Code
+
+class Solution:
+    def longSubarrWthSumDivByK(self, nums, length, k):
+        # Dictionary to store the remainder and its corresponding index
+        remainder_index_map = {0: -1}
+        current_remainder_sum, max_length = 0, 0
+
+        for i in range(length):
+            # Calculate the cumulative remainder sum
+            current_remainder_sum = (current_remainder_sum + nums[i]) % k
+
+            # Check if the current remainder has been seen before
+            if current_remainder_sum in remainder_index_map:
+                # Update the maximum length if the current subarray is longer
+                max_length = max(max_length, i - remainder_index_map[current_remainder_sum])
+            else:
+                # Store the index of the current remainder if it's encountered for the first time
+                remainder_index_map[current_remainder_sum] = i
+
+        return max_length
+
+ 
+Dry Run Example
+Let's dry run the provided code with the following example:
+
+- Initialize remainder_index_map as {0: -1}, current_remainder_sum as 0, and max_length as 0.
+- Iterating through the array:
+  - For arr[0] = 2, update current_remainder_sum to 2 % 3 = 2. Since 2 is not in remainder_index_map, add it with its index 0.
+  - For arr[1] = 7, update current_remainder_sum to (2 + 7) % 3 = 0. 0 is already in remainder_index_map, so update max_length to 1 - (-1) = 2.
+  - Continue this process for the entire array.
+ 
+ 
+- The final result is the length of the longest subarray with a sum divisible by K, which is 4 in this case.
+
+ 
+Time and Space Complexity
+The time complexity of the solution is O(N) as we iterate through the array once.
+ 
+The space complexity is O(K) due to the storage of remainders in the dictionary.
+
+ 
+Conclusion
+The problem of finding the longest subarray with a sum divisible by a given positive integer K can be efficiently solved using the provided approach. The use of a dictionary to store cumulative remainder sums and their corresponding indices allows for a linear time complexity solution. Understanding and applying such techniques is crucial for solving a variety of array-related problems efficiently.
