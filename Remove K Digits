@@ -1,0 +1,82 @@
+Removing K Digits to Form the Smallest Number
+
+Introduction
+When working with non-negative integers represented as strings, a common problem arises: how to remove a certain number of digits to create the smallest possible number? This problem is often encountered in scenarios where minimizing the numerical value is crucial, such as in financial calculations or numerical optimizations. In this article, we'll explore the "Remove K Digits" problem, understand its intuition, and implement an optimized solution using a Python code snippet.
+
+Intuition
+The core idea behind solving this problem lies in identifying the optimal strategy for selecting digits to remove. By iteratively examining each digit and considering the order of removal, we can ensure that the resulting number is minimized. The use of a stack data structure simplifies the process, allowing us to efficiently track the digits in a non-decreasing order.
+
+Approach
+We can use a stack to maintain a non-decreasing order of digits. As we iterate through each digit in the input string, we compare it with the top of the stack. If the current digit is smaller and removing it would lead to a smaller overall number, we pop elements from the stack. This process continues until a suitable position for the current digit is found. After processing all digits, we may still need to remove some remaining digits from the end to achieve the desired result.
+
+Optimized Code
+
+class Solution:
+    def removeKdigits(self, num_str, k):
+        digit_stack = []
+       
+        for current_digit in num_str:
+            while digit_stack and k > 0 and current_digit < digit_stack[-1]:
+                k -= 1
+                digit_stack.pop()
+           
+            digit_stack.append(current_digit)
+       
+        while k > 0:
+            digit_stack.pop()
+            k -= 1
+       
+        result_str = "".join(digit_stack).lstrip('0') or '0'
+       
+        return result_str
+
+Brief Dry Run
+Let's dry run the provided code with an example:
+ 
+ 
+1. Stack: [], current_digit: "1", append "1" to stack.
+2. Stack: ["1"], current_digit: "0", pop "1" as 0 < 1 (k=1), append "0" to stack.
+3. Stack: ["0"], current_digit: "0" as 0 == 0 (k=1), append "0" to stack.
+4. Stack: ["0", "0"], current_digit: "2", as 2>0 so append "2" to stack.
+5. Stack: ["0", "0", "2"], current_digit: "9", as 9>2 so append "9" to stack.
+6. Stack: ["0", "0", "2", "9"], current_digit: "9", pop "9" as 9 == 9, append "9" to stack.
+7. Stack: ["0", "0", "2", "9", "9"], current_digit: "1", since 9>1 so pop 2 9's  and then append "1" to stack.
+8. Stack: ["0", "0", "2", "1"], remove the first 2 0 as they need to be trimmed.
+ 
+ 
+9. Result: "21".
+Time and Space Complexity
+The time complexity of the provided solution is O(N), where N is the length of the input string. The space complexity is also O(N) due to the stack used to store digits.
+Conclusion
+The "Remove K Digits" problem is a fascinating challenge that can be efficiently solved using a stack-based approach. The provided Python code offers an optimized solution to find the smallest possible number after removing K digits. Understanding the intuition and approach behind the solution is crucial for applying similar strategies to other related problems in algorithmic and mathematical contexts.
+
+
+
+
+
+
+
+
+
+
+
+
+
+class Solution:
+    def removeKdigits(self, num_str, k):
+        digit_stack = []
+       
+        for current_digit in num_str:
+            while digit_stack and k > 0 and current_digit < digit_stack[-1]:
+                k -= 1
+                digit_stack.pop()
+           
+            digit_stack.append(current_digit)
+       
+        while k > 0:
+            digit_stack.pop()
+            k -= 1
+       
+        result_str = "".join(digit_stack).lstrip('0') or '0'
+       
+        return result_str
