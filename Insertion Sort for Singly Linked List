@@ -1,0 +1,53 @@
+class Solution
+{
+    Node* insert(Node* ans,Node* head){
+        Node* root = ans;
+        Node* prev = ans;
+        if(ans->data >= head->data){
+            head->next = ans;
+            return head;
+        }
+        else{
+            while(ans->next != nullptr){
+                if(ans->data < head->data){
+                    prev = ans;
+                    ans = ans->next;
+                }
+                else break;
+            }
+        }
+        if(ans->next == nullptr){
+            if(ans->data <= head->data){
+                ans->next = head;
+                head->next = nullptr;
+            }
+             else{
+                 prev->next = head;
+                 head->next = ans;
+             }
+        }
+        else{
+             prev->next = head;
+             head->next = ans;
+        }
+        return root;
+    }
+    public:
+    Node* insertionSort(struct Node* head_ref)
+    {
+        if(head_ref == nullptr) return head_ref;
+        Node* head = head_ref->next;
+        Node* ans = head_ref;
+        ans->next = nullptr;
+        while(head != nullptr){
+            Node* next = head->next;
+            head->next = nullptr;
+            ans = insert(ans,head);
+            head = next;
+        }
+        return ans;
+    }
+    
+};
+
+ 
