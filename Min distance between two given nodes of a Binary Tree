@@ -1,0 +1,27 @@
+private:
+    bool solve(Node* root, int x, vector<int>&path){
+        if(root==NULL)return false;
+        if(root->data==x){
+            path.push_back(root->data);
+            return true;
+        }
+        bool isPresent=solve(root->left,x,path) or solve(root->right,x,path);
+        if(isPresent)path.push_back(root->data);
+        return isPresent;
+    }
+public:
+    /* Should return minimum distance between a and b
+    in a tree with given root*/
+    int findDist(Node* root, int a, int b) {
+        // Your code here
+        vector<int>path1,path2;
+        solve(root,a,path1);
+        solve(root,b,path2);
+        reverse(path1.begin(),path1.end());
+        reverse(path2.begin(),path2.end());
+        int common=0;
+        while(common<min(path1.size(),path2.size()) and path1[common]==path2[common]){
+            common++;
+        }
+        return path1.size()+path2.size()-2*common;
+    }
