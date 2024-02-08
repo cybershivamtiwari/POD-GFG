@@ -1,0 +1,36 @@
+ private:
+    int maxHeight(Node *root) {
+        if(root == NULL)
+            return 0;
+            
+        int rightHeight = maxHeight(root->right);
+        int leftHeight = maxHeight(root->left);
+        
+        return max(rightHeight, leftHeight) + 1;
+    }
+    
+    int minHeight(Node *root) {
+        if(root == NULL)
+            return 0;
+            
+        int leftSide = minHeight(root->left);
+        int rightSide = minHeight(root->right);
+        
+        if(leftSide==0 || rightSide==0)
+            return leftSide+rightSide+1;
+        
+        return min(leftSide, rightSide)+1;
+            
+    }
+  public:
+    /*You are required to complete this method*/
+    bool check(Node *root)
+    {
+        //Your code here
+        // if maximum height and minimum height of the tree is same 
+        // means all leaf nodes are in same level
+        if(maxHeight(root) == minHeight(root))
+            return true;
+            
+        return false;
+    }
