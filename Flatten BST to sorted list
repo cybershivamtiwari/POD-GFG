@@ -1,0 +1,32 @@
+class Solution
+{
+public:
+void inorder(Node *root , vector<int>&ans)
+{
+    if(root==NULL) return ;
+    
+    if(root->left){
+        inorder(root->left,ans);
+    }
+    ans.push_back(root->data);
+    
+    if(root->right){
+        inorder(root->right,ans);
+    }
+}
+
+    Node *flattenBST(Node *root)
+    {
+        // code here
+        vector<int>ans;
+        inorder(root,ans);
+        Node * newnode =new Node(ans[0]);
+        Node * head=newnode;
+        for(int i=1;i<ans.size();i++)
+        {
+            newnode->right = new Node(ans[i]);
+            newnode=newnode->right;
+        }
+        return head;
+    }
+};
